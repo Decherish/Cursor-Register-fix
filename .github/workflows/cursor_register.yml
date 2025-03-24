@@ -106,6 +106,9 @@ jobs:
                   email_configs = json.loads('$emailConfigs')
                   if not isinstance(email_configs, list):
                       raise ValueError('email_configs must be a list')
+                  for email_config in email_configs:
+                      if 'password' in email_config:
+                        email_config['password'] = email_config['password'].replace('\xa0', ' ').strip()
                   config['register']['email_server']['custom_email_addresses'] = email_configs
                   # 确保保留原有的delete_low_balance_account相关配置
                   if 'delete_low_balance_account' not in config['register']:
